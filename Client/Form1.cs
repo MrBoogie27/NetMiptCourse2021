@@ -53,7 +53,7 @@ namespace Client
             return true;
         }
 
-        private void StartNormalize_Click(object sender, EventArgs e)
+        private void Submit_Click(object sender, EventArgs e)
         {
             if (!CheckedField())
                 return;

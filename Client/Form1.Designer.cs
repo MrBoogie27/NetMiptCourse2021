@@ -86,7 +86,7 @@
             this.Submit.TabIndex = 4;
             this.Submit.Text = "Отправить работу";
             this.Submit.UseVisualStyleBackColor = true;
-            this.Submit.Click += new System.EventHandler(this.StartNormalize_Click);
+            this.Submit.Click += new System.EventHandler(this.Submit_Click);
             // 
             // bySoket
             // 
