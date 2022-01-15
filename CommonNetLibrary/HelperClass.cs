@@ -1,14 +1,12 @@
-﻿using ProtoBuf;
+﻿using Google.Protobuf;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Sockets;
-using System.Reflection;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Security.Cryptography;
-using System.Text;
 using WriteToDB;
 
 namespace CommonNetLibrary
@@ -44,9 +42,10 @@ namespace CommonNetLibrary
         #region Сериализация
         public static byte[] ProtoSerialize(StudentJob record)
         {
+            
             using (var stream = new MemoryStream())
             {
-                Serializer.Serialize(stream, record);
+                record.WriteTo(stream);
                 return stream.ToArray();
             }
         }
@@ -55,7 +54,7 @@ namespace CommonNetLibrary
         {
             using (var stream = new MemoryStream(data))
             {
-                return Serializer.Deserialize<StudentJob>(stream);
+                return StudentJob.Parser.ParseFrom(stream);
             }
         }
 

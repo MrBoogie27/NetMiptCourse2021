@@ -19,7 +19,7 @@ namespace CommonNetLibrary
         private const int Port = 3306;
         private const string Username = "root";
         private const string Password = "1111";
-        public static string ConnString = "Server=" + Host + ";Database= " + Database + ";Charset=utf8"
+        public static string ConnString = "Server=" + Host + ";Charset=utf8"
                                             + ";port=" + Port + ";User Id=" + Username + ";password=" + Password;
 
         public static void CreateDb()

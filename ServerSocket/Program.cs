@@ -53,10 +53,8 @@ namespace ServerSocket
 
                         handler.Send(Encoding.UTF8.GetBytes("All right"));
 
-                        MyDB.CreateDb();
-
                         var studentJob = HelperClass.ByteArrayToStudentJob(HelperClass.RecieveMes(handler), DES);
-                        Console.WriteLine($"Name = {studentJob.Fio}");
+                        MyDB.CreateDb();
                         MyDB.WriteToDb(studentJob);
 
                         // отправляем ответ
