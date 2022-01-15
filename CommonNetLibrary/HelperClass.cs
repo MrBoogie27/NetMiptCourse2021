@@ -1,11 +1,14 @@
-﻿using RabbitMQ.Client;
+﻿using ProtoBuf;
+using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Sockets;
+using System.Reflection;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Security.Cryptography;
+using System.Text;
 using WriteToDB;
 
 namespace CommonNetLibrary
@@ -22,7 +25,7 @@ namespace CommonNetLibrary
         {
             using (var encryptor = des.CreateEncryptor())
             {
-                var temp = ObjectToByteArray(obj);
+                var temp = ProtoSerialize(obj);
                 return encryptor.TransformFinalBlock(temp, 0, temp.Length);
             }
         }
@@ -32,13 +35,30 @@ namespace CommonNetLibrary
             using (var decryptor = des.CreateDecryptor())
             {
                 var temp = decryptor.TransformFinalBlock(arrBytes, 0, arrBytes.Length);
-                return ByteArrayToObject(temp) as StudentJob;
+                return ProtoDeserialize(temp) as StudentJob;
             }
         }
 
         #endregion
 
         #region Сериализация
+        public static byte[] ProtoSerialize(StudentJob record)
+        {
+            using (var stream = new MemoryStream())
+            {
+                Serializer.Serialize(stream, record);
+                return stream.ToArray();
+            }
+        }
+
+        public static StudentJob ProtoDeserialize(byte[] data)
+        {
+            using (var stream = new MemoryStream(data))
+            {
+                return Serializer.Deserialize<StudentJob>(stream);
+            }
+        }
+
         public static byte[] ObjectToByteArray(object obj)
         {
             BinaryFormatter bf = new BinaryFormatter();

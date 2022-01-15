@@ -56,12 +56,14 @@ namespace ServerSocket
                         MyDB.CreateDb();
 
                         var studentJob = HelperClass.ByteArrayToStudentJob(HelperClass.RecieveMes(handler), DES);
+                        Console.WriteLine($"Name = {studentJob.Fio}");
                         MyDB.WriteToDb(studentJob);
 
                         // отправляем ответ
                         string message = "Ваше сообщение доставлено";
                         byte[] info = Encoding.UTF8.GetBytes(message);
                         handler.Send(info);
+                        Console.WriteLine("Данные успешно обработаны");
                     }
                     catch (Exception ex)
                     {
@@ -72,7 +74,6 @@ namespace ServerSocket
                         handler.Send(info);
                     }
                 }
-                Console.WriteLine("Данные успешно обработаны");
             }
         }
     }

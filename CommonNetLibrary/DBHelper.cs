@@ -5,7 +5,7 @@ namespace CommonNetLibrary
 {
     public static class MyDB
     {
-        public const string Schema = "Study";
+        public const string Schema = "study";
         public const string Database = "SomeCourse";
         public const string MainTable = "Submitted";
 
@@ -18,7 +18,7 @@ namespace CommonNetLibrary
         private const string Host = "127.0.0.1";
         private const int Port = 3306;
         private const string Username = "root";
-        private const string Password = "111";
+        private const string Password = "1111";
         public static string ConnString = "Server=" + Host + ";Database= " + Database + ";Charset=utf8"
                                             + ";port=" + Port + ";User Id=" + Username + ";password=" + Password;
 
