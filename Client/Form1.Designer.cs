@@ -72,7 +72,7 @@
             this.changeFileButton.TabIndex = 2;
             this.changeFileButton.Text = "...";
             this.changeFileButton.UseVisualStyleBackColor = true;
-            this.changeFileButton.Click += new System.EventHandler(this.changeFileButton_Click);
+            this.changeFileButton.Click += new System.EventHandler(this.ChangeFileButton_Click);
             // 
             // openFileDb
             // 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Windows.Forms;
 using WriteToDB;
 
@@ -6,14 +7,14 @@ namespace Client
 {
     public partial class Form1 : Form
     {
-        Client client = new Client();
+        readonly Client client = new Client();
 
         public Form1()
         {
             InitializeComponent();
         }
 
-        private void changeFileButton_Click(object sender, EventArgs e)
+        private void ChangeFileButton_Click(object sender, EventArgs e)
         {
             openFileDb.Filter = @"C++ files (*.cpp)|*.cpp";
             openFileDb.Multiselect = false;
@@ -23,9 +24,13 @@ namespace Client
 
         private StudentJob ObjectFormation()
         {
-            StudentJob studentJob = new StudentJob();
-
-            return studentJob;
+            return new StudentJob
+            {
+                Fio = fioText.Text,
+                Group = groupText.Text,
+                TaskNumber = (int)taskNumeric.Value,
+                CodeContext = File.ReadAllText(pathFileText.Text)
+            };
         }
 
         private bool CheckedField()
@@ -43,6 +48,17 @@ namespace Client
             if (pathFileText.Text.Length == 0)
             {
                 MessageBox.Show("Выберите файл");
+                return false;
+            }
+            var file = new FileInfo(pathFileText.Text);
+            if (!file.Exists)
+            {
+                MessageBox.Show("Файл не существует");
+                return false;
+            }
+            if (file.Length > 256 * 1024 * 1024) // if more than 256MB
+            {
+                MessageBox.Show("Размер файла превышает 256 MB, выберите другой файл");
                 return false;
             }
             if (addressServerText.Text.Length == 0)
