@@ -18,7 +18,13 @@ namespace ServerGRPC
             };
             server.Start();
 
-            Console.WriteLine($"ServerGRPC listening on port {server.Ports.First().Port}");
+            Console.WriteLine($"ServerGRPC listening on port {server.Ports.First().Port} in addresses: ");
+            foreach (var address in Dns.GetHostEntry(Dns.GetHostName()).AddressList)
+            {
+                if (!address.IsIPv6LinkLocal)
+                    Console.WriteLine(address.ToString());
+            }
+
             Console.WriteLine("Press any key to stop the server...");
             Console.ReadKey();
 
